@@ -41,12 +41,12 @@ void init_vmode()
 	g_VMODES[3].graph_mode = GRAPH_MODE_PAL;
 	strcpy(g_strVMODES[3], "PAL");
 
-	// DTV 408p
+	// DTV 480p
 	g_VMODES[4].width = 720;
 	g_VMODES[4].height = 480;
 	g_VMODES[4].interlace = GRAPH_MODE_NONINTERLACED;
 	g_VMODES[4].graph_mode = GRAPH_MODE_HDTV_480P;
-	strcpy(g_strVMODES[4], "DTV 408p");
+	strcpy(g_strVMODES[4], "DTV 480p");
 
 	// DTV 1080i
 	//g_VMODES[5].width = 640;

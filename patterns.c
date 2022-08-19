@@ -81,8 +81,8 @@ void update_vmode()
 {
 	if (fb.address)
 		graph_vram_free(fb.address);
-	fb.address = graph_vram_allocate(g_VMODE.width, g_VMODE.height, GS_PSM_24, GRAPH_ALIGN_PAGE);
-	fb.width = g_VMODE.width;
+	fb.address = graph_vram_allocate(g_VMODE.width + 63, g_VMODE.height, GS_PSM_24, GRAPH_ALIGN_PAGE);
+	fb.width = g_VMODE.width + 63;
 	fb.height = g_VMODE.height;
 	fb.psm = GS_PSM_24;
 	fb.mask = 0;
@@ -96,7 +96,7 @@ void update_vmode()
 
 	graph_set_mode(g_VMODE.interlace, g_VMODE.graph_mode, 0, 0);
 	graph_set_screen(0, 0, g_VMODE.width, g_VMODE.height);
-	graph_set_framebuffer_filtered(fb.address, fb.width, fb.height, 0, 0);
+	graph_set_framebuffer(1, fb.address, fb.width, fb.psm, 0, 0);
 	graph_enable_output();
 
 	qword_t data[20] __attribute__((aligned(64)));
@@ -106,7 +106,6 @@ void update_vmode()
 		return;
 	}
 	qword_t* q = data;
-
 	q = draw_setup_environment(q, 0, &fb, &zb);
 	q = draw_primitive_xyoffset(q, 0, 0, 0);
 	q = draw_disable_tests(q, 0, &zb);
@@ -137,7 +136,7 @@ void clear_fb()
 	q->dw[1] = (u64)(0);
 	q++;
 	// XYZ2
-	q->dw[0] = (u64)(((((g_VMODE.width + 1) << 4)) | (((u64)((g_VMODE.height + 1) << 4)) << 32)));
+	q->dw[0] = (u64)(((((g_VMODE.width + 10) << 4)) | (((u64)((g_VMODE.height + 30) << 4)) << 32)));
 	q->dw[1] = (u64)(0);
 	q++;
 

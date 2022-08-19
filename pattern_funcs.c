@@ -345,15 +345,15 @@ void func_borders(qword_t* q, struct padButtonStatus* pbs)
 	q->dw[1] = (u64)(0);
 	q++;
 	// XYZ2
-	q->dw[0] = (u64)(((g_VMODE.width - border_offsets[1]) << 4) | ((u64)(border_offsets[0] << 4) << 32));
+	q->dw[0] = (u64)((((g_VMODE.width - 1) - border_offsets[1]) << 4) | ((u64)(border_offsets[0] << 4) << 32));
 	q->dw[1] = (u64)(0);
 	q++;
 	// XYZ2
-	q->dw[0] = (u64)(((g_VMODE.width - border_offsets[1]) << 4) | ((u64)((g_VMODE.height - border_offsets[2]) << 4) << 32));
+	q->dw[0] = (u64)((((g_VMODE.width - 1) - border_offsets[1]) << 4) | ((u64)(((g_VMODE.height - 1) - border_offsets[2]) << 4) << 32));
 	q->dw[1] = (u64)(0);
 	q++;
 	// XYZ2
-	q->dw[0] = (u64)((border_offsets[3] << 4) | ((u64)((g_VMODE.height - border_offsets[2]) << 4) << 32));
+	q->dw[0] = (u64)((border_offsets[3] << 4) | ((u64)(((g_VMODE.height - 1) - border_offsets[2]) << 4) << 32));
 	q->dw[1] = (u64)(0);
 	q++;
 	// XYZ2
