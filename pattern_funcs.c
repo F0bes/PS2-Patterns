@@ -68,6 +68,7 @@ char* patterns_string()
 	return g_strPatterns[g_iPattern];
 }
 
+static u32 line_flip;
 static u32 vlines_off = 1;
 void func_vlines(qword_t* q, struct padButtonStatus* pbs)
 {
@@ -75,7 +76,7 @@ void func_vlines(qword_t* q, struct padButtonStatus* pbs)
 	PACK_GIFTAG(q, GIF_SET_TAG(g_VMODE.width / 2, 1, GIF_PRE_ENABLE, GIF_SET_PRIM(GIF_PRIM_SPRITE, 0, 0, 0, 0, 0, 0, 0, 0), GIF_FLG_PACKED, 3),
 		GIF_REG_RGBAQ | (GIF_REG_XYZ2 << 4) | (GIF_REG_XYZ2 << 8));
 	q++;
-	u32 cur_x = 0;
+	u32 cur_x = line_flip ? vlines_off : 0;
 	for (int i = 0; i < g_VMODE.width; i += 2)
 	{
 		// RGBAQ
@@ -118,6 +119,11 @@ void func_vlines(qword_t* q, struct padButtonStatus* pbs)
 		vlines_off++;
 		input_delay();
 	}
+	if(!(pbs->btns & PAD_CROSS))
+	{
+		line_flip = !line_flip;
+		input_delay();
+	}
 
 	q = draw_finish(q);
 	FlushCache(0);
@@ -132,7 +138,7 @@ void func_hlines(qword_t* q, struct padButtonStatus* pbs)
 	PACK_GIFTAG(q, GIF_SET_TAG(g_VMODE.height / 2, 1, GIF_PRE_ENABLE, GIF_SET_PRIM(GIF_PRIM_SPRITE, 0, 0, 0, 0, 0, 0, 0, 0), GIF_FLG_PACKED, 3),
 		GIF_REG_RGBAQ | (GIF_REG_XYZ2 << 4) | (GIF_REG_XYZ2 << 8));
 	q++;
-	u32 cur_y = 0;
+	u32 cur_y = line_flip ? hlines_off : 0;
 	for (int i = 0; i < g_VMODE.height; i += 2)
 	{
 		// RGBAQ
@@ -173,6 +179,11 @@ void func_hlines(qword_t* q, struct padButtonStatus* pbs)
 	if (!(pbs->btns & PAD_UP))
 	{
 		hlines_off++;
+		input_delay();
+	}
+	if(!(pbs->btns & PAD_CROSS))
+	{
+		line_flip = !line_flip;
 		input_delay();
 	}
 	q = draw_finish(q);

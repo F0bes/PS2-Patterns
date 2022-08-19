@@ -236,12 +236,14 @@ int main(void)
 	printf("L1/R1 - change pattern\n");
 	printf("START - toggle pattern\n");
 	printf("TRIANGLE - show current mode / vmode\n");
-	sio_puts("DPAD - Change line distance\n");
+	printf("DPAD - Change line distance\n");
+	printf("CROSS - Flip lines\n");
 	sio_puts("L2/R2 - change vmode\n");
 	sio_puts("L1/R1 - change pattern\n");
 	sio_puts("START - toggle pattern\n");
 	sio_puts("TRIANGLE - show current mode / vmode\n");
 	sio_puts("DPAD - Change line distance\n");
+	sio_puts("CROSS - Flip lines\n");
 
 	dma_channel_initialize(DMA_CHANNEL_GIF, NULL, 0);
 	dma_channel_fast_waits(DMA_CHANNEL_GIF);
